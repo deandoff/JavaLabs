@@ -1,0 +1,6 @@
+мар. 09, 2025 6:29:25 PM lab4.TCPClient main
+INFO: Отправлена команда: SET_DEFAULT 1 1 0 0
+мар. 09, 2025 6:29:25 PM lab4.TCPClient main
+INFO: Ответ сервера: Предустановленные значения установлены.
+мар. 09, 2025 6:29:42 PM lab4.TCPClient main
+INFO: Клиент завершил работу.

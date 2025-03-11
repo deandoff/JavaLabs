@@ -73,7 +73,7 @@ public class TCPServer {
             String command;
             while ((command = in.readLine()) != null) {
                 String dataLine = in.readLine();
-                logger.info(String.format("Получено: [%s] Данные: [%s]", command, dataLine));
+                logger.info(String.format("Получено: [%s] Данные: [%s] От клиента: [%s]", command, dataLine, clientSocket.getRemoteSocketAddress()));
 
                 if (dataLine == null) {
                     out.println("Ошибка: Нет данных для команды");

@@ -24,3 +24,57 @@ INFO: Целочисленный массив: [[-1, 2, 3], [4, 5, 6], [7, 8, 9]
 INFO: Вещественный массив: [[1.1, 2.2, 3.3], [4.4, 5.5, 6.6], [7.7, 8.8, 9.9]]
 мар. 09, 2025 6:29:25 PM lab4.TCPServer printArrays
 INFO: Строковый массив: [[one, two, three], [four, five, six], [seven, eight, nine]]
+мар. 11, 2025 12:23:27 PM lab4.TCPServer main
+INFO: Запуск TCP-сервера на 84.39.247.103:80
+мар. 11, 2025 12:23:27 PM lab4.TCPServer main
+INFO: Сервер запущен и слушает порт 80
+мар. 11, 2025 12:23:51 PM lab4.TCPServer lambda$main$0
+INFO: Подключен клиент: /26.237.70.28:51080
+мар. 11, 2025 12:24:05 PM lab4.TCPServer lambda$main$0
+INFO: Подключен клиент: /26.237.70.28:51082
+мар. 11, 2025 12:24:20 PM lab4.TCPServer handleClient
+INFO: Получено: [READ] Данные: [1 0 0]
+мар. 11, 2025 12:24:27 PM lab4.TCPServer handleClient
+INFO: Получено: [WRITE] Данные: [1 0 0 100]
+мар. 11, 2025 12:24:27 PM lab4.TCPServer printArrays
+INFO: Целочисленный массив: [[100, 2, 3], [4, 5, 6], [7, 8, 9]]
+мар. 11, 2025 12:24:27 PM lab4.TCPServer printArrays
+INFO: Вещественный массив: [[1.1, 2.2, 3.3], [4.4, 5.5, 6.6], [7.7, 8.8, 9.9]]
+мар. 11, 2025 12:24:27 PM lab4.TCPServer printArrays
+INFO: Строковый массив: [[one, two, three], [four, five, six], [seven, eight, nine]]
+мар. 11, 2025 12:24:51 PM lab4.TCPServer handleClient
+INFO: Получено: [READ] Данные: [1 0 0]
+мар. 11, 2025 12:24:54 PM lab4.TCPServer handleClient
+INFO: Получено: [READ] Данные: [1 0 0]
+мар. 11, 2025 12:25:19 PM lab4.TCPServer handleClient
+INFO: Получено: [WRITE] Данные: [1 0 0 300]
+мар. 11, 2025 12:25:19 PM lab4.TCPServer printArrays
+INFO: Целочисленный массив: [[300, 2, 3], [4, 5, 6], [7, 8, 9]]
+мар. 11, 2025 12:25:19 PM lab4.TCPServer printArrays
+INFO: Вещественный массив: [[1.1, 2.2, 3.3], [4.4, 5.5, 6.6], [7.7, 8.8, 9.9]]
+мар. 11, 2025 12:25:19 PM lab4.TCPServer printArrays
+INFO: Строковый массив: [[one, two, three], [four, five, six], [seven, eight, nine]]
+мар. 11, 2025 12:25:25 PM lab4.TCPServer handleClient
+INFO: Получено: [WRITE] Данные: [1 0 0 400]
+мар. 11, 2025 12:25:25 PM lab4.TCPServer printArrays
+INFO: Целочисленный массив: [[400, 2, 3], [4, 5, 6], [7, 8, 9]]
+мар. 11, 2025 12:25:25 PM lab4.TCPServer printArrays
+INFO: Вещественный массив: [[1.1, 2.2, 3.3], [4.4, 5.5, 6.6], [7.7, 8.8, 9.9]]
+мар. 11, 2025 12:25:25 PM lab4.TCPServer printArrays
+INFO: Строковый массив: [[one, two, three], [four, five, six], [seven, eight, nine]]
+мар. 11, 2025 12:25:33 PM lab4.TCPServer handleClient
+INFO: Получено: [READ] Данные: [1 0 0]
+мар. 11, 2025 12:34:39 PM lab4.TCPServer lambda$main$0
+INFO: Подключен клиент: /26.237.70.28:51221
+мар. 11, 2025 12:58:41 PM lab4.TCPServer main
+INFO: Запуск TCP-сервера на 84.39.247.103:80
+мар. 11, 2025 12:58:41 PM lab4.TCPServer main
+INFO: Сервер запущен и слушает порт 80
+мар. 11, 2025 12:59:50 PM lab4.TCPServer lambda$main$0
+INFO: Подключен клиент: /26.237.70.28:52878
+мар. 11, 2025 1:00:05 PM lab4.TCPServer lambda$main$0
+INFO: Подключен клиент: /26.237.70.28:52892
+мар. 11, 2025 1:00:13 PM lab4.TCPServer handleClient
+INFO: Получено: [READ] Данные: [1 0 0] От клиента [/26.237.70.28:52878]
+мар. 11, 2025 1:00:20 PM lab4.TCPServer handleClient
+INFO: Получено: [READ] Данные: [1 0 0] От клиента [/26.237.70.28:52892]

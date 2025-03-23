@@ -1,0 +1,21 @@
+1) GO TO PROJECT FOLDER
+cd C:\Users\deandoff\IdeaProjects\JavaLabs1\src
+
+2) COMPILE ALL CLASSES
+javac lab5/compute/Compute.java lab5/compute/Task.java lab5/engine/ComputeEngine.java lab5/client/SortTask.java
+
+3) CREATE JAR AND MOVE IT TO NET FOLDER
+jar cvf P:\compute.jar lab5/compute/Compute.class lab5/compute/Task.class
+
+4) GO TO NET FOLDER
+cd P:\
+
+5) LAUNCH RMI USING:
+rmiregistry
+
+6) OPEN NEW CMD WINDOW AND LAUNCH SERVER
+java -cp C:\Users\deandoff\IdeaProjects\JavaLabs1\src;P:\compute.jar -Djava.rmi.server.codebase=file:/C:/Users/deandoff/IdeaProjects/JavaLabs1/src/ -Djava.rmi.server.hostname=localhost -Djava.security.policy=P:\server.policy lab5.engine.ComputeEngine
+
+7) OPEN NEW CMD WINDOW FOR CLIENT
+java -cp C:\Users\deandoff\IdeaProjects\JavaLabs1\src;P:\compute.jar -Djava.security.policy=P:\client.policy lab5.client.SortTask "host_address" array
+

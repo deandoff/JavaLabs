@@ -1,4 +1,4 @@
-1) GO TO PROJECT FOLDER
+ 1) GO TO PROJECT FOLDER
 cd C:\Users\deandoff\IdeaProjects\JavaLabs1\src
 
 2) COMPILE ALL CLASSES
@@ -19,3 +19,21 @@ java -cp C:\Users\deandoff\IdeaProjects\JavaLabs1\src;P:\compute.jar -Djava.rmi.
 7) OPEN NEW CMD WINDOW FOR CLIENT
 java -cp C:\Users\deandoff\IdeaProjects\JavaLabs1\src;P:\compute.jar -Djava.security.policy=P:\client.policy lab5.client.SortTask "host_address" array
 
+
+
+// for client
+
+go to the project folder
+
+javac lab5/compute/Compute.java lab5/compute/Task.java lab5/engine/ComputeEngine.java lab5/client/SortTask.java
+
+java -cp C:\Java\JavaLabs\src;\\26.142.32.59\lab\compute.jar -Djava.security.policy=P:\client.policy lab5.client.SortTask "host" port
+
+for example:
+    java -cp C:\Java\JavaLabs\src;\\26.142.32.59\lab\compute.jar -Djava.security.policy=P:\client.policy lab5.client.SortTask "26.142.32.59" 1099
+
+    or
+
+    java -cp C:\Java\JavaLabs\src;\\26.142.32.59\lab\compute.jar -Djava.security.policy=P:\client.policy lab5.client.SortTask 26.142.32.59 1099 1 9 2 3 4 5 8 7 6 10 13 11
+
+Sorted numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9]

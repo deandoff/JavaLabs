@@ -1,6 +1,8 @@
 P:\ - сетевая папка
 C:\Users\deandoff\IdeaProjects\JavaLabs1\src - папка с исходниками
 
+ССЫЛКА НА ВИДЕОИНСТРУКЦИЮ - https://www.youtube.com/watch?v=AlOPy5mUkD4
+
 ИСПОЛЬЗУЙТЕ СВОИ ПУТИ
 
 1. Компиляция проекта

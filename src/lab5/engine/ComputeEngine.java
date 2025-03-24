@@ -3,21 +3,12 @@ package lab5.engine;
 import lab5.compute.Compute;
 import lab5.compute.Task;
 
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ComputeEngine implements Compute {
-
-    public ComputeEngine() {
-        super();
-    }
-
-    @Override
-    public <T> T execute(Task<T> t) {
-        return t.execute();
-    }
-
     public static void main(String[] args) {
         try {
             String name = "Compute";
@@ -30,5 +21,14 @@ public class ComputeEngine implements Compute {
             System.err.println("ComputeEngine exception:");
             e.printStackTrace();
         }
+    }
+
+    public ComputeEngine() {
+        super();
+    }
+
+    @Override
+    public <T> T execute(Task<T> t) throws RemoteException {
+        return t.execute();
     }
 }

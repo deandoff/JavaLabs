@@ -1,11 +1,11 @@
- 1) GO TO PROJECT FOLDER
-cd C:\Users\deandoff\IdeaProjects\JavaLabs1\src
+1) GO TO PROJECT FOLDER
+cd C:\Users\deandoff\IdeaProjects\JavaLab5\src
 
 2) COMPILE ALL CLASSES
-javac lab5/compute/Compute.java lab5/compute/Task.java lab5/engine/ComputeEngine.java lab5/client/SortTask.java
+javac compute\*.java
 
 3) CREATE JAR AND MOVE IT TO NET FOLDER
-jar cvf P:\compute.jar lab5/compute/Compute.class lab5/compute/Task.class
+jar cvf P:\compute.jar compute\*.class
 
 4) GO TO NET FOLDER
 cd P:\
@@ -14,7 +14,7 @@ cd P:\
 rmiregistry
 
 6) OPEN NEW CMD WINDOW AND LAUNCH SERVER
-java -cp C:\Users\deandoff\IdeaProjects\JavaLabs1\src;P:\compute.jar -Djava.rmi.server.codebase=file:/C:/Users/deandoff/IdeaProjects/JavaLabs1/src/ -Djava.rmi.server.hostname=localhost -Djava.security.policy=P:\server.policy lab5.engine.ComputeEngine
+java -cp C:\Users\deandoff\IdeaProjects\JavaLab5\src;P:\compute.jar -Djava.rmi.server.codebase=file:C:\Users\deandoff\IdeaProjects\JavaLab5\src -Djava.rmi.server.hostname=localhost -Djava.security.policy=P:\server.policy engine.ComputeEngine
 
 7) OPEN NEW CMD WINDOW FOR CLIENT
 java -cp C:\Users\deandoff\IdeaProjects\JavaLabs1\src;P:\compute.jar -Djava.security.policy=P:\client.policy lab5.client.SortTask "host_address" array
@@ -37,3 +37,83 @@ for example:
     java -cp C:\Java\JavaLabs\src;\\26.142.32.59\lab\compute.jar -Djava.security.policy=P:\client.policy lab5.client.SortTask 26.142.32.59 1099 1 9 2 3 4 5 8 7 6 10 13 11
 
 Sorted numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+
+1. Проверка структуры проекта
+
+Убедитесь, что после компиляции классы находятся в правильных директориях:
+Copy
+
+src/
+  lab5/
+    compute/
+      Compute.class
+      Task.class
+    engine/
+      ComputeEngine.class
+    client/
+      ComputeClient.class
+
+2. Создание JAR-файла
+
+Правильно создайте JAR-файл с сохранением структуры пакетов:
+
+cd C:\Users\deandoff\IdeaProjects\JavaLabs1\src
+jar cvf P:\compute.jar -C . lab5/compute/Compute.class lab5/compute/Task.class
+
+3. Запуск RMI Registry
+
+Запустите реестр с указанием classpath:
+
+cd C:\Users\deandoff\IdeaProjects\JavaLabs1\src
+set CLASSPATH=P:\compute.jar
+rmiregistry
+
+4. Запуск сервера
+
+Используйте эту команду:
+
+java -cp "C:\Users\deandoff\IdeaProjects\JavaLabs1\src;P:\compute.jar" ^
+-Djava.rmi.server.codebase=file:/P:/compute.jar ^
+-Djava.rmi.server.hostname=localhost ^
+-Djava.security.policy=P:\server.policy ^
+lab5.engine.ComputeEngine
+
+5. Запуск клиента
+
+java -cp "C:\Users\deandoff\IdeaProjects\JavaLabs1\src;P:\compute.jar" ^
+-Djava.security.policy=P:\client.policy ^
+lab5.client.ComputeClient localhost
+
+Ключевые моменты:
+
+    Все пути должны быть абсолютными
+
+    В codebase указывается JAR-файл, а не директория
+
+    Убедитесь, что все файлы политик содержат:
+
+
+grant {
+    permission java.security.AllPermission;
+};
+
+Альтернативное решение
+
+Если ошибка сохраняется, попробуйте:
+
+    Поместить все классы в один JAR:
+
+jar cvf P:\all.jar -C . lab5/
+
+    Запускать все компоненты с этим JAR:
+
+
+java -cp P:\all.jar ...
+
+    Убедитесь, что в коде сервера используется правильное имя для регистрации:
+
+
+Registry registry = LocateRegistry.getRegistry();
+registry.rebind("Compute", stub);  // Должно совпадать с именем при lookup

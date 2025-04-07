@@ -14,7 +14,12 @@ public class ExceptionsFuncs implements IExceptionsFuncs, IExceptionsConsts {
 
     public void ThrowEqualNumberException(String[] args) throws EqualNumberException {
         for (String s : args) {
-            if (Integer.parseInt(s) == IExceptionsConsts.equalNumber) throw new EqualNumberException();
+            try {
+                if (Integer.parseInt(s) == IExceptionsConsts.equalNumber) throw new EqualNumberException();
+            } catch (NumberFormatException e) {
+                //
+            }
         }
+
     }
 }

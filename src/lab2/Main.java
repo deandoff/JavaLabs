@@ -26,9 +26,12 @@ public class Main {
         }
 
         List<Integer> list = new ArrayList<>();
-        for (String s : args) {
-            list.add(Integer.parseInt(s));
+        try {
+            for (String s : args) list.add(Integer.parseInt(s));
+        } catch (NumberFormatException e) {
+            //
         }
+
         List<Integer> sortedList = list.stream().sorted().toList();
         System.out.println(sortedList);
 

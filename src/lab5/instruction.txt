@@ -1,0 +1,34 @@
+P:\ - сетевая папка
+C:\Users\deandoff\IdeaProjects\JavaLabs1\src - папка с исходниками
+
+ССЫЛКА НА ВИДЕОИНСТРУКЦИЮ - https://www.youtube.com/watch?v=AlOPy5mUkD4
+
+ИСПОЛЬЗУЙТЕ СВОИ ПУТИ
+
+1. Компиляция проекта
+
+cd C:\Users\deandoff\IdeaProjects\JavaLabs1\src
+javac lab5\client\*.java lab5\compute\*.java lab5\engine\*.java
+
+2. Создание JAR-файла
+
+cd C:\Users\deandoff\IdeaProjects\JavaLabs1\src
+jar cvf P:\compute.jar -C . lab5/compute/Compute.class lab5/compute/Task.class
+
+3. Запуск RMI Registry
+
+cd C:\Users\deandoff\IdeaProjects\JavaLabs1\src
+rmiregistry [-J-Djava.class.path=compute.jar]
+
+4. Запуск сервера
+java -cp "C:\Users\deandoff\IdeaProjects\JavaLabs1\src;P:\compute.jar" -Djava.rmi.server.codebase=file:/P:\compute.jar -Djava.rmi.server.hostname=26.142.32.59 -Djava.security.policy=P:\server.policy lab5.engine.ComputeEngine
+
+4. Запуск клиента
+java -cp "C:\Users\deandoff\IdeaProjects\JavaLabs1\src;P:\compute.jar" -Djava.security.policy=C:\Users\deandoff\IdeaProjects\JavaLabs1\src\lab5\client.policy -Djava.rmi.server.codebase=file:/C:\Users\deandoff\IdeaProjects\JavaLabs1\src lab5.client.SortTask 26.142.32.59 1099 -3 5 1 2 0 3 -5
+
+
+Extra. Содержимое файлов client.policy и server.policy
+
+grant {
+    permission java.security.AllPermission;
+};

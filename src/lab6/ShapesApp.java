@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ShapesApp {
     static int shapeCount = 0;
+    static final int maxShapeCount = 10;
 
     public static void main(String[] args) {
         new ShapesController();
@@ -21,6 +22,7 @@ class ShapesController implements ActionListener, ItemListener, Observer {
 
     private Button startButton;
     private Choice colorChoice;
+    private Choice textColorChoice;
     private TextField shapeField;
     private Choice speedChoice;
     private Choice selectShapeChoice;
@@ -34,14 +36,14 @@ class ShapesController implements ActionListener, ItemListener, Observer {
 
     private void createControlFrame() {
         controlFrame = new Frame("Управляющее окно");
-        controlFrame.setLayout(new GridLayout(7, 2));
+        controlFrame.setLayout(new GridLayout(8, 2));
         controlFrame.setSize(400, 300);
 
         controlFrame.add(new Label("Тип фигуры (введите):"));
         shapeField = new TextField();
         controlFrame.add(shapeField);
 
-        controlFrame.add(new Label("Цвет:"));
+        controlFrame.add(new Label("Цвет заливки:"));
         colorChoice = new Choice();
         colorChoice.add("Синий");
         colorChoice.add("Зелёный");
@@ -50,6 +52,17 @@ class ShapesController implements ActionListener, ItemListener, Observer {
         colorChoice.add("Жёлтый");
         colorChoice.add("Розовый");
         controlFrame.add(colorChoice);
+
+        controlFrame.add(new Label("Цвет текста:"));
+        textColorChoice = new Choice();
+        textColorChoice.add("Синий");
+        textColorChoice.add("Зелёный");
+        textColorChoice.add("Красный");
+        textColorChoice.add("Чёрный");
+        textColorChoice.add("Жёлтый");
+        textColorChoice.add("Розовый");
+        controlFrame.add(textColorChoice);
+
 
         controlFrame.add(new Label("Начальная скорость:"));
         speedChoice = new Choice();
@@ -118,8 +131,11 @@ class ShapesController implements ActionListener, ItemListener, Observer {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == startButton) {
+        if (e.getSource() == startButton && ShapesApp.shapeCount < ShapesApp.maxShapeCount) {
+
             Color color = getSelectedColor();
+            Color textColor = getTextColor();
+
             String shapeType = shapeField.getText().trim();
             int speed = speedChoice.getSelectedIndex() + 1;
 
@@ -128,7 +144,7 @@ class ShapesController implements ActionListener, ItemListener, Observer {
             }
 
             ShapesApp.shapeCount++;
-            MovingShape shape = new MovingShape(ShapesApp.shapeCount, shapeType, color, speed, displayPanel.getSize());
+            MovingShape shape = new MovingShape(ShapesApp.shapeCount, shapeType, color, speed, displayPanel.getSize(), textColor);
             shape.addObserver(this);
             shapes.add(shape);
 
@@ -182,6 +198,18 @@ class ShapesController implements ActionListener, ItemListener, Observer {
         }
     }
 
+    private Color getTextColor() {
+        switch (textColorChoice.getSelectedIndex()) {
+            case 0: return Color.BLUE;
+            case 1: return Color.GREEN;
+            case 2: return Color.RED;
+            case 3: return Color.BLACK;
+            case 4: return Color.YELLOW;
+            case 5: return Color.PINK;
+            default: return Color.BLUE;
+        }
+    }
+
     class DisplayPanel extends Panel {
         private Image buffer;
         private Graphics bufferGraphics;
@@ -223,30 +251,28 @@ class MovingShape extends Observable implements Runnable {
     private final int id;
     private final String type;
     private Color color;
-    private volatile int speed;
-    private volatile Dimension bounds;
+    private Color textColor;
+    private double speed;
+    private Dimension bounds;
+    private double angle;
 
-    private int x, y;
-    private int dx, dy;
+    private double x, y;
     private Thread thread;
     private boolean running = true;
+    private static final Random rand = new Random();
 
-    public MovingShape(int id, String type, Color color, int speed, Dimension bounds) {
+    public MovingShape(int id, String type, Color color, int speed, Dimension bounds, Color textColor) {
         this.id = id;
         this.type = type;
         this.color = color;
         this.speed = speed;
         this.bounds = bounds;
+        this.textColor = textColor;
+
+        this.angle = rand.nextDouble() * 2 * Math.PI;
 
         this.x = 10;
         this.y = 30;
-
-        Random rand = new Random();
-        this.dx = rand.nextInt(3) + 1;
-        this.dy = rand.nextInt(3) + 1;
-
-        if (rand.nextBoolean()) dx = -dx;
-        if (rand.nextBoolean()) dy = -dy;
 
         this.thread = new Thread(this);
         this.thread.start();
@@ -256,11 +282,11 @@ class MovingShape extends Observable implements Runnable {
         return id;
     }
 
-    public synchronized void setSpeed(int speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 
-    public synchronized void updateBounds(Dimension newBounds) {
+    public void updateBounds(Dimension newBounds) {
         this.bounds = newBounds;
 
         if (x >= bounds.width - 30) x = bounds.width - 40;
@@ -275,78 +301,72 @@ class MovingShape extends Observable implements Runnable {
             notifyObservers();
 
             try {
-                Thread.sleep(100 / speed);  // Чем больше speed, тем меньше задержка
+                Thread.sleep(16);
             } catch (InterruptedException e) {
                 running = false;
             }
         }
     }
 
-    private synchronized void move() {
-        x += dx;
-        y += dy;
+    private void move() {
+        x += Math.cos(angle) * speed;
+        y += Math.sin(angle) * speed;
 
-        if (x <= 0) {
-            x = 0;
-            dx = Math.abs(dx);
-        } else if (x >= bounds.width - 30) {
-            x = bounds.width - 30;
-            dx = -Math.abs(dx);
+        if (x <= 0 || x >= bounds.width - 30) {
+            angle = Math.PI - angle;
+            x = Math.max(0, Math.min(x, bounds.width - 30));
         }
 
-        if (y <= 0) {
-            y = 0;
-            dy = Math.abs(dy);
-        } else if (y >= bounds.height - 30) {
-            y = bounds.height - 30;
-            dy = -Math.abs(dy);
+        if (y <= 0 || y >= bounds.height - 30) {
+            angle = -angle;
+            y = Math.max(0, Math.min(y, bounds.height - 30));
         }
     }
+
 
     public void draw(Graphics g) {
         g.setColor(color);
 
         switch (type.toLowerCase()) {
             case "круг":
-                g.fillOval(x, y, 30, 30);
+                g.fillOval((int)x, (int)y, 30, 30);
                 break;
             case "овал":
-                g.fillOval(x, y, 40, 30);
+                g.fillOval((int)x, (int)y, 40, 30);
                 break;
             case "квадрат":
-                g.fillRect(x, y, 30, 30);
+                g.fillRect((int)x, (int)y, 30, 30);
                 break;
             case "прямоугольник":
-                g.fillRect(x, y, 40, 30);
+                g.fillRect((int)x, (int)y, 40, 30);
                 break;
             case "треугольник":
-                int[] xPoints = {x + 15, x, x + 30};
-                int[] yPoints = {y, y + 30, y + 30};
+                int[] xPoints = {(int)x + 15, (int)x, (int)x + 30};
+                int[] yPoints = {(int)y, (int)y + 30, (int)y + 30};
                 g.fillPolygon(xPoints, yPoints, 3);
                 break;
-            default:  // По умолчанию рисуем круг
-                g.fillOval(x, y, 30, 30);
+            default:
+                g.fillOval((int)x, (int)y, 30, 30);
                 break;
         }
 
-        g.setColor(Color.BLACK);
-        g.drawString(String.valueOf(id), x + 10, y + 15);
+        g.setColor(textColor);
+        g.drawString(String.valueOf(id), (int)x + 10, (int)y + 15);
     }
 
     public Object getType() {
         return type;
     }
 
-
-    public Object getSpeed() {
-        return speed;
+    public int getSpeed() {
+        return (int)speed;
     }
 
-    public Object getX() {
-        return x;
+    public int getX() {
+        return (int)x;
     }
 
-    public Object getY() {
-        return y;
+    public int getY() {
+        return (int)y;
     }
 }
